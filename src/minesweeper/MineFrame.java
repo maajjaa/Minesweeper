@@ -1,5 +1,7 @@
 package minesweeper;
 import javax.swing.JToggleButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MineFrame extends javax.swing.JFrame {
 
@@ -8,6 +10,23 @@ public class MineFrame extends javax.swing.JFrame {
     JToggleButton[][]blocks=new JToggleButton[hei][wid];
     int[][]block = new int[hei][wid];
     
+    ActionListener listen = new ActionListener(){
+        public void actionPerformed(ActionEvent e){
+            int i=0, j=0;
+            boolean found = false;
+            for(i=0; i<hei; i++){
+                
+                for(j=0; j<wid; j++){
+                    if(e.getSource() == blocks[i][j]){
+                        found = true;
+                        break;
+                    }                   
+                }
+                if(found) break;
+            }
+            blocks[i][j].setSelected(true);
+        }
+    };
     public MineFrame() {
         initComponents();
         
@@ -17,6 +36,7 @@ public class MineFrame extends javax.swing.JFrame {
                 blocks[i][j].setSize(jPanel1.getWidth()/wid ,jPanel1.getHeight()/hei);
                 jPanel1.add(blocks[i][j]);
                 blocks[i][j].setLocation(j*jPanel1.getWidth()/wid , i*jPanel1.getHeight()/hei);
+                blocks[i][j].addActionListener(listen);
                 
             }
             
@@ -29,6 +49,7 @@ public class MineFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Minesweeper");
 
         jPanel1.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
@@ -71,7 +92,7 @@ public class MineFrame extends javax.swing.JFrame {
     private void rsize(){
         for(int i=0; i<hei; i++){
             for(int j=0; j<wid; j++){
-                blocks[i][j].setSize(jPanel1.getWidth()/wid ,jPanel1.getHeight()/hei);
+                blocks[i][j].setSize(jPanel1.getWidth()/wid, jPanel1.getHeight()/hei);
                 jPanel1.add(blocks[i][j]);
                 blocks[i][j].setLocation(j*jPanel1.getWidth()/wid , i*jPanel1.getHeight()/hei);
                 

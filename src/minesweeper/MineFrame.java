@@ -5,10 +5,11 @@ import java.awt.event.ActionListener;
 
 public class MineFrame extends javax.swing.JFrame {
 
-    final int wid=10, hei=10, noMines=10;
+    final int wid = 10, hei = 10, noMines = 10;
     
     JToggleButton[][]blocks=new JToggleButton[hei][wid];
     int[][]block = new int[hei][wid];
+    boolean first, play;
     
     ActionListener listen = new ActionListener(){
         public void actionPerformed(ActionEvent e){
@@ -24,9 +25,81 @@ public class MineFrame extends javax.swing.JFrame {
                 }
                 if(found) break;
             }
-            blocks[i][j].setSelected(true);
+            if(play){
+                blocks[i][j].setSelected(true);
+            
+                if(!first){
+                    firstMine(i,j);
+                    first = true;    
+                }
+                
+                if(block[i][j] != -1){
+                    open(i,j);
+                    playing();
+                }
+            }else playing();
         }
     };
+    
+
+    private void open(int y, int x){
+        if(y < 0 || x < 0 || x > wid-1 || y > hei-1 || block[y][x] != 0) return;
+        int mines=0;
+        for(int i = y-1; i <= y+1; i++){
+            for(int j = x-1; j <= x+1; j++){
+                if(!(j < 0 || i < 0 || j > wid-1 || i > hei-1) && block[i][j] == -1)
+                    mines++;
+                
+            }
+        }
+        if(mines == 0){
+            block[y][x]= -2;
+            for(int i = y-1; i <= y+1; i++){
+                for(int j = x-1; j <= x+1; j++){
+                    if(!(j < 0 || i < 0 || j > wid-1 || i > hei-1))
+                    if(i != y || j != x) open(i,j);
+                }
+            }
+        }
+        else block[y][x] = mines;
+    }
+    
+    private void playing(){
+        for(int i = 0; i < hei; i++){
+            for(int j = 0; j < wid; j++){
+                if(block[i][j] == 0){
+                    blocks[i][j].setText("");
+                    blocks[i][j].setSelected(false);
+                }
+                if(block[i][j] == -2){
+                    blocks[i][j].setText("");
+                    blocks[i][j].setSelected(true);
+                }
+                if(block[i][j] > 0){
+                    blocks[i][j].setText(""+block[i][j]);
+                    blocks[i][j].setSelected(true);
+                }
+                if(!play && block[i][j] == -1)
+                    blocks[i][j].setSelected(true);
+            }
+        }
+            
+    }
+
+            
+    private void firstMine (int y , int x){
+       
+        for(int k = 1; k <= noMines; k++){
+            int i,j;
+            do{
+                i=(int)(Math.random()*(wid-.01));
+                j=(int)(Math.random()*(hei-.01));
+            }
+            while(block[i][j] == -1 || (i == y && j == x));
+            block[i][j] = -1;
+                    
+        }
+    }
     public MineFrame() {
         initComponents();
         
@@ -38,10 +111,10 @@ public class MineFrame extends javax.swing.JFrame {
                 blocks[i][j].setLocation(j*jPanel1.getWidth()/wid , i*jPanel1.getHeight()/hei);
                 blocks[i][j].addActionListener(listen);
                 
-            }
-            
-                
+            }        
         }
+        first = false;
+        play = true;
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

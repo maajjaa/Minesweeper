@@ -12,6 +12,8 @@ public class MineFrame extends javax.swing.JFrame {
     boolean first, play;
     
     ActionListener listen = new ActionListener(){
+        
+        @Override
         public void actionPerformed(ActionEvent e){
             int i=0, j=0;
             boolean found = false;
@@ -36,12 +38,42 @@ public class MineFrame extends javax.swing.JFrame {
                 if(block[i][j] != -1){
                     open(i,j);
                     playing();
-                }
+                }else lose();
+                win();
             }else playing();
         }
     };
     
-
+    private void win(){
+        boolean won = true;
+        for(int i=0; i<hei; i++){
+            for(int j=0; j<wid; j++){
+                if(block[i][j] == 0){
+                    won = false;
+                    break;
+                }
+            }
+            if(!won)break;
+        }
+        if(won){
+            javax.swing.JOptionPane.showMessageDialog(null, "You win!");
+            play = false;
+        }
+       
+    }
+    void lose(){
+        play = false;
+        for(int i=0; i<hei; i++){
+            for(int j=0; j<wid; j++){
+                if(block[i][j] == -1){
+                    blocks[i][j].setText("Mina");
+                    blocks[i][j].setSelected(true);
+                }
+            }
+        }
+        javax.swing.JOptionPane.showMessageDialog(null, "You lose.");
+    }
+    
     private void open(int y, int x){
         if(y < 0 || x < 0 || x > wid-1 || y > hei-1 || block[y][x] != 0) return;
         int mines=0;
@@ -134,11 +166,11 @@ public class MineFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addGap(0, 397, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 378, Short.MAX_VALUE)
+            .addGap(0, 408, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

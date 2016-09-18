@@ -6,7 +6,7 @@ public class Minesweeper {
       
         MineFrame frame = new MineFrame();
         
-        frame.setExtendedState(javax.swing.JFrame.MAXIMIZED_BOTH);
+        
         frame.setVisible(true);
         
          

@@ -4,6 +4,9 @@ import java.awt.Toolkit;
 import javax.swing.JToggleButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 public class MineFrame extends javax.swing.JFrame {
 
@@ -68,7 +71,12 @@ public class MineFrame extends javax.swing.JFrame {
         for(int i=0; i<hei; i++){
             for(int j=0; j<wid; j++){
                 if(block[i][j] == -1){
-                    blocks[i][j].setText("Mina");
+                    try {
+                	    ImageIcon img = new ImageIcon(ImageIO.read(getClass().getResource("mine.png")));
+                	    blocks[i][j].setIcon(img);
+                	  } catch (IOException ex) {
+                	}
+                    
                     blocks[i][j].setSelected(true);
                 }
             }
@@ -144,7 +152,8 @@ public class MineFrame extends javax.swing.JFrame {
                 jPanel1.add(blocks[i][j]);
                 blocks[i][j].setLocation(j*jPanel1.getWidth()/wid , i*jPanel1.getHeight()/hei);
                 blocks[i][j].addActionListener(listen);
-                
+                ImageIcon img = null;
+                blocks[i][j].setIcon(img);
             }        
         }
         first = false;

@@ -123,6 +123,7 @@ public class MineFrame extends javax.swing.JFrame {
                 }
                 if(!play && block[i][j] == -1)
                     blocks[i][j].setSelected(true);
+                blocks[i][j].setIcon(null);
             }
         }
             

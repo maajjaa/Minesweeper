@@ -34,7 +34,7 @@ in a high score list.
 ### Example:
 
 Win code example:
-```java#
+```java
 private void win(){
         boolean won = true;
         for(int i=0; i<hei; i++){

@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 public class MineFrame extends javax.swing.JFrame {
 
-    final int wid = 10, hei = 10, noMines = 10;
+    public static int wid = 10, hei = 10, noMines = 10;
     
     JToggleButton[][]blocks=new JToggleButton[hei][wid];
     int[][]block = new int[hei][wid];
@@ -48,7 +48,8 @@ public class MineFrame extends javax.swing.JFrame {
             }else playing();
         }
     };
-    
+
+
     private void win(){
         boolean won = true;
         for(int i=0; i<hei; i++){
@@ -143,7 +144,7 @@ public class MineFrame extends javax.swing.JFrame {
                     
         }
     }
-    public MineFrame() {
+    public MineFrame(int height, int width) {
         initComponents();
         setIcon();
         for(int i=0; i<hei; i++){
@@ -167,6 +168,8 @@ public class MineFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Minesweeper");
@@ -191,13 +194,29 @@ public class MineFrame extends javax.swing.JFrame {
 
         jMenu1.setText("Game");
 
-        jMenuItem1.setText("New game");
+        jMenuItem1.setText("New game 5x5");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("10x10");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("15x15");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
@@ -241,11 +260,31 @@ public class MineFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel1ComponentResized
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        block = new int[hei][wid];
-        playing();
-        play = true;
-        first = false;
+       
+        MineFrame.hei = 5;
+        MineFrame.wid = 5;
+        MineFrame frame = new MineFrame(300, 300);
+
+        frame.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       
+        MineFrame.hei = 10;
+        MineFrame.wid = 10;
+        MineFrame frame = new MineFrame(500, 500);
+
+        frame.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       
+        MineFrame.hei = 15;
+        MineFrame.wid = 15;
+        MineFrame frame = new MineFrame(800, 800);
+
+        frame.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
 
 
@@ -253,10 +292,14 @@ public class MineFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("mine.png")));
     }
+
+
 }
